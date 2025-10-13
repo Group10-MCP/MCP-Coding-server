@@ -1,5 +1,7 @@
 fastmcp
 pyjwt
 pytest
-google-genai>=0.15.0
+google-generativeai>=0.8.5
 requests>=2.31.0
+atlassian-python-api>=3.41.0
+python-dotenv>=1.0.0
