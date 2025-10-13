@@ -1,47 +1,62 @@
-# services/gemini_mock.py - Enhanced mock service
 class MockGeminiService:
     def ask(self, prompt: str) -> str:
-        # Enhanced mock responses based on prompt content
-        if "explain" in prompt.lower():
-            return self._mock_explanation(prompt)
-        elif "review" in prompt.lower():
-            return self._mock_review(prompt)
-        elif "test" in prompt.lower():
-            return self._mock_tests(prompt)
-        elif "generate" in prompt.lower() or "write code" in prompt.lower():
-            return self._mock_code_generation(prompt)
+        # Simple unified response logic
+        response_templates = {
+            "explain": """Code Explanation:
+
+This code appears to implement a well-structured function that:
+- Takes input parameters and returns processed results
+- Includes proper error handling
+- Follows good coding practices
+- Uses clear variable naming
+
+The main logic focuses on data processing with appropriate validation.""",
+            
+            "review": """Code Review:
+
+✅ Positive Aspects:
+- Clean code structure
+- Good error handling
+- Readable variable names
+
+⚠️ Suggestions:
+- Add more comments
+- Consider edge cases
+- Improve test coverage
+
+Overall: Good quality code with minor improvements needed.""",
+            
+            "test": """Generated Unit Tests:
+
+```python
+import pytest
+
+def test_basic_functionality():
+    \"\"\"Test main functionality\"\"\"
+    assert True  # Replace with actual tests
+
+def test_edge_cases():
+    \"\"\"Test boundary conditions\"\"\"
+    assert True  # Replace with edge case tests
+```""",
+            
+            "generate": """```python
+def solution():
+    \"\"\"Generated code based on requirements\"\"\"
+    # Implementation goes here
+    return "result"
+```"""
+        }
+        
+        prompt_lower = prompt.lower()
+        
+        if "explain" in prompt_lower:
+            return response_templates["explain"]
+        elif "review" in prompt_lower:
+            return response_templates["review"]
+        elif "test" in prompt_lower:
+            return response_templates["test"]
+        elif "generate" in prompt_lower or "write code" in prompt_lower:
+            return response_templates["generate"]
         else:
-            return f"[Mocked Gemini response for: {prompt[:100]}...]"
-    
-    def _mock_explanation(self, prompt: str) -> str:
-        return """This code appears to be a function that processes data. Here's a breakdown:
-
-1. **Function Purpose**: The main function takes input parameters and returns processed results
-2. **Key Components**: 
-   - Input validation
-   - Data transformation logic
-   - Error handling
-3. **Complexity**: O(n) time complexity, suitable for medium-sized datasets
-
-The code follows good practices with proper error handling and clear variable names."""
-
-    def _mock_review(self, prompt: str) -> str:
-        return """Code Review Results:
-
-✅ **Strengths**:
-- Good code structure and organization
-- Proper error handling implemented
-- Clear variable naming conventions
-
-⚠️ **Areas for Improvement**:
-- Consider adding more detailed docstrings
-- Could benefit from type hints
-- Some functions could be broken down further
-
-🔧 **Suggestions**:
-- Add input validation for edge cases
-- Consider using context managers for resource handling
-- Improve test coverage"""
-
-    def _mock_tests(self, prompt: str) -> str:
-        return """Generated Unit Tests:"""
+            return f"Mock AI response to: {prompt[:200]}..."
