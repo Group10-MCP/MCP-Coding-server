@@ -4,6 +4,7 @@ from tools.generate_code import _generate_code_core
 from tools.code_review import _code_review_core
 from tools.code_explain import _code_explain_core
 from tools.unit_tests import _generate_unit_tests_core
+from tools.mockito_test_tool import _generate_mockito_test_core
 from tools.jira_intergration import (
         get_jira_issue_details,
         generate_code_from_jira
@@ -48,6 +49,17 @@ async def generate_unit_tests(
         ctx: Context = None
     ) -> str:
         return await _generate_unit_tests_core(code, language, test_framework, coverage_goal, ctx)
+
+@mcp.tool(name="generate_mockito_tests", description="Generate Mockito-based JUnit tests for a given Java class and method")
+async def generate_mockito_tests(
+        target_class: str,
+        target_method: str,
+        description: str = "",
+        ctx: Context = None
+) -> str:
+    return await _generate_mockito_test_core(target_class, target_method, description, ctx)
+
+
 
 @mcp.tool(name="get_jira_issue", description="Get Jira issue details without exposing sensitive data to AI")
 async def get_jira_issue(
