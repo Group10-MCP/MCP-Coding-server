@@ -2,7 +2,12 @@ from fastmcp import FastMCP, Context
 from tools.generate_code import _generate_code_core
 from tools.code_review import _code_review_core
 from tools.code_explain import _code_explain_core
+from jwt_auth import JWTAuthMiddleware
+
 mcp = FastMCP(name="MCP Server with JWT")
+
+#JWT middleware
+mcp.add_middleware(JWTAuthMiddleware)
 
 @mcp.tool(name="generate_code", description="Generate code based on input requirements")
 async def generate_code(input_data: str, ctx: Context) -> str:
